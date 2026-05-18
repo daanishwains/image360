@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Generation {
+  id          String   @id @default(cuid())
+  prompt      String
+  ratio       String   @default("1:1")
+  imageUrl    String
+  status      String   @default("completed")
+  isFavorite  Boolean  @default(false)
+  collection  String?
+  source      String   @default("single")
+  createdAt   DateTime @default(now())
+}
+
+model Workflow {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  data        String
+  isTemplate  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Collection {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
